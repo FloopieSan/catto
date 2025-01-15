@@ -182,9 +182,9 @@ function library:CreateWatermark(name, position)
                 local fps = math.floor(counter / (currentTime - startTime))
                 counter = 0
                 startTime = currentTime
-
+                local Time = getCurrentTimeFormatted()
                 if fps ~= oldfps then
-                    watermark.label.Text = " " .. name:gsub("{game}", gamename):gsub("{fps}", fps .. " FPS") .. " "
+                    watermark.label.Text = " " .. name:gsub("{game}", gamename):gsub("{fps}", fps .. " FPS"):gsub('{time}', 'Time: '.. Time) .. " "
                     watermark.label.Size = UDim2.new(0, watermark.label.TextBounds.X+10, 0, 25) 
                     watermark.mainbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 25)
                     watermark.topbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 1)
@@ -195,20 +195,6 @@ function library:CreateWatermark(name, position)
                 oldfps = fps
             end
         end
-
-        if name:find('{time}') then
-            local Time = getCurrentTimeFormatted()
-            if Time ~= OldTime then
-                watermark.label.Text = watermark.label.Text:gsub('{time}', .. ' Time: ' .. Time)
-                watermark.label.Size = UDim2.new(0, watermark.label.TextBounds.X+10, 0, 25) 
-                watermark.mainbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 25)
-                watermark.topbar.Size = UDim2.new(0, watermark.label.TextBounds.X, 0, 1)
-                watermark.Outline.Size = watermark.mainbar.Size + UDim2.fromOffset(2, 2)
-                watermark.BlackOutline.Size = watermark.mainbar.Size + UDim2.fromOffset(4, 4)
-            end
-            OldTime = Time
-        end
-
     end)
 
     watermark.mainbar.MouseEnter:Connect(function()
